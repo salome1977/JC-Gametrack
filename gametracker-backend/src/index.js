@@ -19,3 +19,20 @@ const PORT = process.env.PORT || 5000;
 connectDB(process.env.MONGO_URI)
  .then(() => app.listen(PORT, () => console.log(`servidor corriendo en puerto ${PORT}`)))
  .catch((err) => console.error(err));
+
+ 
+
+// Ruta de bienvenida más descriptiva
+app.get('/', (req, res) => {
+  res.json({ 
+    message: '🎮 GameTracker API funcionando',
+    version: '1.0.0',
+    endpoints: {
+      games: '/api/games',
+      stats: '/api/stats'
+    },
+    documentation: 'Usa el frontend en http://localhost:5173'
+  });
+});
+
+
