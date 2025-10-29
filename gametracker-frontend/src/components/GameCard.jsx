@@ -3,15 +3,11 @@ import { Link } from 'react-router-dom';
 import './GameCard.css';
 
 const GameCard = ({ game, onDelete }) => {
-  const getStatusColor = (status) => {
-    const colors = {
-      'Completed': '#10b981',
-      'Playing': '#3b82f6',
-      'Not Started': '#6b7280',
-      'On Hold': '#f59e0b',
-      'Dropped': '#ef4444'
-    };
-    return colors[status] || '#6b7280';
+  // Función para formatear la fecha
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
   const renderStars = (rating) => {
@@ -25,15 +21,23 @@ const GameCard = ({ game, onDelete }) => {
     ));
   };
 
+  const getStatusText = (completed) => {
+    return completed ? 'Completado' : 'No Completado';
+  };
+
+  const getStatusColor = (completed) => {
+    return completed ? '#10b981' : '#6b7280';
+  };
+
   return (
     <div className="game-card">
       <div 
         className="game-image"
         style={{ 
-          backgroundImage: game.imageUrl ? `url(${game.imageUrl})` : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+          backgroundImage: game.coverImageUrl ? `url(${game.coverImageUrl})` : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
         }}
       >
-        {!game.imageUrl && <span>🎮</span>}
+        {!game.coverImageUrl && <span>🎮</span>}
       </div>
       
       <div className="game-content">
@@ -41,29 +45,48 @@ const GameCard = ({ game, onDelete }) => {
           <h3 className="game-title">{game.title}</h3>
           <span 
             className="status-badge"
-            style={{ backgroundColor: getStatusColor(game.status) }}
+            style={{ backgroundColor: getStatusColor(game.completed) }}
           >
-            {game.status}
+            {getStatusText(game.completed)}
           </span>
         </div>
         
         <div className="game-info">
           <span className="platform">{game.platform}</span>
           <span className="genre">{game.genre}</span>
+          {game.releaseDate && (
+            <span className="release-date">{formatDate(game.releaseDate)}</span>
+          )}
         </div>
         
         <div className="game-stats">
           <div className="rating">
-            {renderStars(game.rating)}
+            {renderStars(game.averageRating)}
+            <span className="rating-text">({game.averageRating}/5)</span>
           </div>
           {game.hoursPlayed > 0 && (
-            <span className="hours">{game.hoursPlayed}h</span>
+            <span className="hours">{game.hoursPlayed}h jugadas</span>
+          )}
+          {game.totalReviews > 0 && (
+            <span className="reviews">{game.totalReviews} reseñas</span>
           )}
         </div>
+
+        {game.developer && (
+          <div className="game-developer">
+            <strong>Desarrollador:</strong> {game.developer}
+          </div>
+        )}
+
+        {game.publisher && (
+          <div className="game-publisher">
+            <strong>Publicador:</strong> {game.publisher}
+          </div>
+        )}
         
-        {game.review && (
-          <p className="review-preview">
-            {game.review.substring(0, 100)}...
+        {game.description && (
+          <p className="description-preview">
+            {game.description.substring(0, 120)}...
           </p>
         )}
         

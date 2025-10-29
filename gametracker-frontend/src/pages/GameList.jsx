@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gameService } from '../services/api';
-import GameCard from '../components/GameCard';
+import GameCard from '../components/GameCard'; // ← AGREGAR ESTA IMPORTACIÓN
 import './GameList.css';
 
 const GameList = () => {
@@ -41,7 +41,9 @@ const GameList = () => {
 
   const filteredGames = games.filter(game => {
     if (filter === 'all') return true;
-    return game.status === filter;
+    if (filter === 'completed') return game.completed;
+    if (filter === 'not-completed') return !game.completed;
+    return true;
   });
 
   if (loading) {
@@ -75,34 +77,16 @@ const GameList = () => {
           Todos
         </button>
         <button 
-          className={`filter-btn ${filter === 'Not Started' ? 'active' : ''}`}
-          onClick={() => setFilter('Not Started')}
-        >
-          No Iniciados
-        </button>
-        <button 
-          className={`filter-btn ${filter === 'Playing' ? 'active' : ''}`}
-          onClick={() => setFilter('Playing')}
-        >
-          Jugando
-        </button>
-        <button 
-          className={`filter-btn ${filter === 'Completed' ? 'active' : ''}`}
-          onClick={() => setFilter('Completed')}
+          className={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
+          onClick={() => setFilter('completed')}
         >
           Completados
         </button>
         <button 
-          className={`filter-btn ${filter === 'On Hold' ? 'active' : ''}`}
-          onClick={() => setFilter('On Hold')}
+          className={`filter-btn ${filter === 'not-completed' ? 'active' : ''}`}
+          onClick={() => setFilter('not-completed')}
         >
-          En Pausa
-        </button>
-        <button 
-          className={`filter-btn ${filter === 'Dropped' ? 'active' : ''}`}
-          onClick={() => setFilter('Dropped')}
-        >
-          Abandonados
+          No Completados
         </button>
       </div>
 

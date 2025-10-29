@@ -12,7 +12,15 @@ const GameSchema = new mongoose.Schema({ // informacion del juego
     averageRating: {type: Number, default: 0,min: 0, max: 5 },// calificacion promedio se calufican del 0 al 5
     totalReviews: {type: Number, default: 0},// total de reseñas
     hoursPlayed: {type: Number, default: 0, min:0},// horas jugadas
-    completed: {type: Boolean, default: false}// si el juego fue completado
-    },
-    { timestamps : true });
+    completed: {type: Boolean, default: false},// si el juego fue completado
+    createdAt: {type: Date, default: Date.now }, //para pruebas ¿si se esta creando?
+    updatedAt: { type: Date, default: Date.now} //para pruebas
+   // { timestamps : true }
+   });
+
+    GameSchema.pre('save', function(next) {
+    this.updatedAt = Date.now();
+    next();
+    });
+
 module.exports = mongoose.model('Game', GameSchema);

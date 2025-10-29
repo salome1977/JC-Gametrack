@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import GameList from './pages/GameList';
+import TestForm from './pages/TestForm'; // validar el formulario de prueba
 import GameForm from './pages/GameForm';
 import Statistics from './pages/Statistics';
 import GameDetail from './pages/GameDetail';

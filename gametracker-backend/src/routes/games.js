@@ -25,26 +25,98 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST - Crear un nuevo juego
+// POST - Crear un nuevo juego (CON DEBUG COMPLETO)
 router.post('/', async (req, res) => {
-  const game = new Game({
-    title: req.body.title,
-    platform: req.body.platform,
-    genre: req.body.genre,
-    status: req.body.status,
-    rating: req.body.rating,
-    review: req.body.review,
-    hoursPlayed: req.body.hoursPlayed,
-    completionDate: req.body.completionDate,
-    imageUrl: req.body.imageUrl,
-    tags: req.body.tags
-  });
-
   try {
+    console.log('🔍 === BACKEND - DATOS RECIBIDOS ===');
+    console.log('📦 Body RAW:', JSON.stringify(req.body, null, 2));
+    console.log('📋 Content-Type:', req.headers['content-type']);
+    
+    // Verificar CADA campo requerido
+    const campos = [
+      'title', 'genre', 'platform', 'releaseDate', 
+      'developer', 'publisher', 'description', 'coverImageUrl'
+    ];
+    
+    console.log('📝 VERIFICACIÓN DE CAMPOS:');
+    campos.forEach(campo => {
+      const valor = req.body[campo];
+      console.log(`   ${campo}:`, valor ? `"${valor}"` : '❌ FALTANTE');
+    });
+
+    // DEBUG: Verificar si el body está vacío
+    if (Object.keys(req.body).length === 0) {
+      console.log('❌ ERROR: req.body está VACÍO');
+      return res.status(400).json({ 
+        message: 'El cuerpo de la petición está vacío',
+        receivedHeaders: req.headers 
+      });
+    }
+
+    // Verificar si faltan campos requeridos
+    const camposFaltantes = campos.filter(campo => !req.body[campo]);
+    if (camposFaltantes.length > 0) {
+      console.log('❌ CAMPOS FALTANTES:', camposFaltantes);
+      return res.status(400).json({
+        message: `Campos requeridos faltantes: ${camposFaltantes.join(', ')}`,
+        missingFields: camposFaltantes
+      });
+    }
+
+    console.log('🎯 Intentando crear juego en MongoDB...');
+    
+    // Crear el juego con cada campo explícitamente
+    const game = new Game({
+      title: req.body.title,
+      genre: req.body.genre,
+      platform: req.body.platform,
+      releaseDate: req.body.releaseDate,
+      developer: req.body.developer,
+      publisher: req.body.publisher,
+      description: req.body.description,
+      coverImageUrl: req.body.coverImageUrl,
+      averageRating: req.body.averageRating || 0,
+      totalReviews: req.body.totalReviews || 0,
+      hoursPlayed: req.body.hoursPlayed || 0,
+      completed: req.body.completed || false
+    });
+
+    console.log('💾 Objeto Game creado:', game);
+    
     const newGame = await game.save();
+    
+    console.log('✅ JUEGO CREADO EXITOSAMENTE! ID:', newGame._id);
+    console.log('📊 Juego guardado:', JSON.stringify(newGame, null, 2));
+    
     res.status(201).json(newGame);
+    
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error('❌ ERROR AL GUARDAR EN MONGODB:');
+    console.error('📋 Nombre del error:', error.name);
+    console.error('📋 Mensaje:', error.message);
+    
+    if (error.name === 'ValidationError') {
+      console.error('🔍 Errores de validación detallados:');
+      Object.keys(error.errors).forEach(field => {
+        const err = error.errors[field];
+        console.error(`   - ${field}: ${err.message}`);
+        console.error(`     Valor recibido: ${err.value}`);
+        console.error(`     Tipo: ${err.value ? typeof err.value : 'undefined'}`);
+      });
+    }
+
+    if (error.name === 'CastError') {
+      console.error('🔍 Error de casteo:', error);
+    }
+    
+    console.error('💾 Datos que causaron el error:', JSON.stringify(req.body, null, 2));
+    
+    res.status(400).json({ 
+      message: error.message,
+      errorType: error.name,
+      validationErrors: error.errors || error.message,
+      receivedData: req.body
+    });
   }
 });
 
