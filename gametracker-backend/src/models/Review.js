@@ -1,12 +1,20 @@
 const mongoose = require('mongoose');
 
-const ReviewSchema = new mongoose.Schema({
-    game : {type: mongoose.Schema.Types.ObjectId, ref: 'Game', required: true}, // referencia al juego
-    user: {type: String, required: true}, // nombre del usuario que hizo la reseña
-    title: {type: String, required: true}, // titulo de la reseña
-    rating: {type: Number, required: true, min: 0, max: 5}, // calificacion del juego del 0 al 5
-    comment: {type: String, required: true}, // comentario de la reseña
-    hoursAtReview: {type: Number, required: true, min: 0}, // horas jugadas al momento de la reseña
-}, { timestamps : true });
+const reviewSchema = new mongoose.Schema({
+  juegoId: { type: mongoose.Schema.Types.ObjectId, ref: 'Game', required: true },
+  puntuacion: {type: Number, required: true, min: 1, max: 5 },
+  textoReseña: { type: String, required: true, trim: true, maxlength: 2000 },
+  horasJugadas: { type: Number, required: true, min: 0 },
+  dificultad: {type: String, required: true, enum: ['Fácil', 'Normal', 'Difícil'] },
+  recomendaria: { type: Boolean, required: true },
+  fechaCreacion: { type: Date, default: Date.now },
+  fechaActualizacion: { type: Date, default: Date.now}
+});
 
-module.exports = mongoose.model('Review', ReviewSchema);
+// Actualizar fechaActualizacion antes de guardar (al dia)
+reviewSchema.pre('save', function(next) {
+  this.fechaActualizacion = Date.now();
+  next();
+});
+
+module.exports = mongoose.model('Review', reviewSchema);

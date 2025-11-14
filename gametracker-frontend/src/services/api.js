@@ -61,4 +61,28 @@ export const statsService = {
   getStats: () => api.get('/stats'),
 };
 
+// PARA EL MANEJO DE RESEÑAS
+export const reviewService = {
+  // Obtener todas las reseñas
+  getAllReviews: () => api.get('/reviews'),
+  
+  // Obtener reseña por ID
+  getReviewById: (id) => api.get(`/reviews/${id}`),
+  
+  // Obtener reseñas por juego
+  getReviewsByGame: (gameId) => api.get(`/reviews/game/${gameId}`),
+  
+  // Crear nueva reseña
+  createReview: (reviewData) => api.post('/reviews', reviewData),
+  
+  // Actualizar reseña
+  updateReview: (id, reviewData) => api.put(`/reviews/${id}`, reviewData),
+  
+  // Eliminar reseña
+  deleteReview: (id) => api.delete(`/reviews/${id}`),
+  
+  // Obtener estadísticas de reseñas
+  getReviewStats: () => api.get('/reviews/stats'),
+};
+
 export default api;

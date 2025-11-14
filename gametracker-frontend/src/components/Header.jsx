@@ -9,7 +9,14 @@ const Header = () => {
     <header className="header">
       <div className="container">
         <Link to="/" className="logo">
-          🎮 GameTracker
+         <img 
+            src="/images/LogoGT.png" 
+            alt="GameTracker Logo" 
+            className="logo-image"
+            width="128" height="140"
+          />
+           GAME TRACKER
+          {/*🎮 GameTracker asi era la forma sencilla, ahora con mi logo*/}
         </Link>
         <nav className="nav">
           <Link 

@@ -1,0 +1,317 @@
+/* Estadísticas Principales */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card.main-stat {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  transition: transform 0.3s;
+}
+
+.stat-card.main-stat:hover {
+  transform: translateY(-8px);
+}
+
+.stat-card.main-stat .stat-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card.main-stat .stat-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card.main-stat .stat-label {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* Gráficos de Estadísticas */
+.charts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.chart-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.chart-section h3 {
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+/* Gráfico de Recomendaciones */
+.recommendation-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.recommendation-item {
+  display: flex;
+  align-items: center;
+}
+
+.recommendation-label {
+  width: 140px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.recommendation-bar-container {
+  flex: 1;
+  background: #f3f4f6;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 35px;
+}
+
+.recommendation-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 1rem;
+  transition: width 0.5s ease-in-out;
+  min-width: 60px;
+}
+
+.recommendation-bar.yes {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.recommendation-bar.no {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.recommendation-value {
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+/* Reseñas Recientes */
+.recent-reviews {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  margin-bottom: 2rem;
+}
+
+.recent-reviews h3 {
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.review-summary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  transition: background-color 0.3s;
+}
+
+.review-summary:hover {
+  background: #f1f5f9;
+}
+
+.review-game-image {
+  width: 50px;
+  height: 65px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.review-summary-info {
+  flex: 1;
+}
+
+.review-summary-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.review-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.review-meta span {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.review-meta .rating {
+  color: #f59e0b;
+  font-weight: 500;
+}
+
+.review-meta .hours {
+  color: #3b82f6;
+}
+
+.review-meta .recommendation.yes {
+  color: #10b981;
+}
+
+.review-meta .recommendation.no {
+  color: #ef4444;
+}
+
+.review-preview {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.view-all-container {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Insights y Logros */
+.insights-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.insights-section h3 {
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.insight-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid;
+}
+
+.insight-card.achievement {
+  background: #fef7ed;
+  border-left-color: #f59e0b;
+}
+
+.insight-card.positive {
+  background: #f0fdf4;
+  border-left-color: #10b981;
+}
+
+.insight-card.dedicated {
+  background: #eff6ff;
+  border-left-color: #3b82f6;
+}
+
+.insight-card.generous {
+  background: #faf5ff;
+  border-left-color: #8b5cf6;
+}
+
+.insight-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.insight-content h4 {
+  margin: 0 0 0.5rem 0;
+  color: #1f2937;
+  font-size: 1.1rem;
+}
+
+.insight-content p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .charts-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .review-summary {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .review-meta {
+    justify-content: center;
+  }
+  
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .recommendation-label {
+    width: 120px;
+    font-size: 0.8rem;
+  }
+  
+  .chart-section {
+    padding: 1.5rem;
+  }
+}

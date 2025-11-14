@@ -12,6 +12,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.3s;
+  border: 1px solid #e5e7eb;
 }
 
 .stat-card:hover {
@@ -35,10 +36,64 @@
   font-weight: 500;
 }
 
+.featured-stat {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  border: 1px solid #e5e7eb;
+}
+
+.featured-stat h3 {
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.most-played-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.most-played-image {
+  width: 80px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.most-played-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+}
+
+.most-played-info p {
+  margin: 0 0 0.5rem 0;
+  color: #6b7280;
+}
+
+.most-played-hours {
+  background: #eff6ff;
+  color: #1d4ed8;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  display: inline-block;
+}
+
 .charts-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .chart-section {
@@ -46,6 +101,7 @@
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
 }
 
 .chart-section h3 {
@@ -64,6 +120,7 @@
   width: 120px;
   font-weight: 500;
   color: #374151;
+  font-size: 0.9rem;
 }
 
 .chart-bar-container {
@@ -90,17 +147,135 @@
   font-size: 0.875rem;
 }
 
+.completion-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.completion-item {
+  display: flex;
+  align-items: center;
+}
+
+.completion-label {
+  width: 120px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.completion-bar-container {
+  flex: 1;
+  background: #f3f4f6;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 30px;
+}
+
+.completion-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 1rem;
+  transition: width 0.5s ease-in-out;
+}
+
+.completion-bar.completed {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.completion-bar.not-completed {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+.completion-value {
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.genres-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.genres-section h3 {
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.genres-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.genre-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
+}
+
+.genre-name {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.genre-count {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .stat-card {
+    padding: 1.5rem;
+  }
+  
   .charts-container {
     grid-template-columns: 1fr;
   }
   
   .chart-section {
-    padding: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .most-played-card {
+    flex-direction: column;
+    text-align: center;
   }
   
   .chart-label {
     width: 100px;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
+  }
+  
+  .completion-label {
+    width: 100px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .genres-list {
+    grid-template-columns: 1fr;
   }
 }

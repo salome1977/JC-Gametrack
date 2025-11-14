@@ -4,8 +4,8 @@ import { reviewService, gameService } from '../services/api';
 import './ReviewForm.css';
 
 const ReviewForm = () => {
-  const { id } = useParams();
-  const { state } = useLocation();
+  const { id } = useParams(); // ID de la reseña (para edición)
+  const { state } = useLocation(); // Datos del juego desde navegación
   const navigate = useNavigate();
   
   const isEditing = Boolean(id);
@@ -13,7 +13,7 @@ const ReviewForm = () => {
   const [games, setGames] = useState([]);
   
   const [formData, setFormData] = useState({
-    juegoId: state?.juego?._id || '',
+    juegoId: state?.juego?._id || '', // ← Inicializar con el juego de state si existe
     puntuacion: 5,
     textoReseña: '',
     horasJugadas: 0,
@@ -25,7 +25,41 @@ const ReviewForm = () => {
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Mover loadGames aquí también para consistencia
+  useEffect(() => {
+    if (isEditing) {
+      loadReview();
+    } else {
+      loadGames();
+    }
+    
+    // Si viene con juego desde la navegación, establecerlo
+    if (state?.juego && !formData.juegoId) {
+      setFormData(prev => ({ ...prev, juegoId: state.juego._id }));
+    }
+  }, [id, isEditing, state]);
+
+  const loadReview = async () => {
+    try {
+      const response = await reviewService.getAllReviews();
+      const review = response.data.find(r => r._id === id);
+      
+      if (review) {
+        setFormData({
+          juegoId: review.juegoId._id,
+          puntuacion: review.puntuacion,
+          textoReseña: review.textoReseña,
+          horasJugadas: review.horasJugadas,
+          dificultad: review.dificultad,
+          recomendaria: review.recomendaria
+        });
+        setJuego(review.juegoId);
+      }
+    } catch (err) {
+      setError('Error al cargar la reseña');
+      console.error(err);
+    }
+  };
+
   const loadGames = async () => {
     try {
       const response = await gameService.getAllGames();
@@ -34,41 +68,6 @@ const ReviewForm = () => {
       console.error('Error cargando juegos:', err);
     }
   };
-
-  useEffect(() => {
-    // Función loadReview dentro del useEffect
-    const loadReview = async () => {
-      try {
-        const response = await reviewService.getAllReviews();
-        const review = response.data.find(r => r._id === id);
-        
-        if (review) {
-          setFormData({
-            juegoId: review.juegoId._id,
-            puntuacion: review.puntuacion,
-            textoReseña: review.textoReseña,
-            horasJugadas: review.horasJugadas,
-            dificultad: review.dificultad,
-            recomendaria: review.recomendaria
-          });
-          setJuego(review.juegoId);
-        }
-      } catch (err) {
-        setError('Error al cargar la reseña');
-        console.error(err);
-      }
-    };
-
-    if (isEditing) {
-      loadReview();
-    } else {
-      loadGames();
-    }
-    
-    if (state?.juego && !formData.juegoId) {
-      setFormData(prev => ({ ...prev, juegoId: state.juego._id }));
-    }
-  }, [id, isEditing, state, formData.juegoId]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -89,6 +88,7 @@ const ReviewForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Validaciones
     if (!formData.juegoId) {
       setError('Debes seleccionar un juego');
       return;

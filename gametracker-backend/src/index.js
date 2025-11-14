@@ -10,9 +10,9 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // importar rutas
-const reviewsRouter = require('./routes/reviews');
+const reviewsRoutes = require('./routes/reviews');
 const gamesRoutes = require('./routes/games');
-app.use('/api/reviews', reviewsRouter);
+app.use('/api/reviews', reviewsRoutes); // Ruta para reseñas validar
 app.use('/api/games', gamesRoutes);
 
 const PORT = process.env.PORT || 5000;
@@ -34,5 +34,6 @@ app.get('/', (req, res) => {
     documentation: 'Usa el frontend en http://localhost:5173'
   });
 });
-
+//app.use('/api/reseñas', reviewsRoutes);
+app.use('/api/reviews', reviewsRoutes);
 

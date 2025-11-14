@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET - Obtener un juego por ID
+// GET - Obtener un juego especifico por ID
 router.get('/:id', async (req, res) => {
   try {
     const game = await Game.findById(req.params.id);
@@ -25,7 +25,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST - Crear un nuevo juego (CON DEBUG COMPLETO)
+// POST - Crear un nuevo juego a la colección, estpy mirando que llega
 router.post('/', async (req, res) => {
   try {
     console.log('🔍 === BACKEND - DATOS RECIBIDOS ===');

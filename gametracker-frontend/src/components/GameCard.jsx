@@ -34,7 +34,7 @@ const GameCard = ({ game, onDelete }) => {
       <div 
         className="game-image"
         style={{ 
-          backgroundImage: game.coverImageUrl ? `url(${game.coverImageUrl})` : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+          backgroundImage: game.coverImageUrl ? `url(${game.coverImageUrl})` : 'linear-gradient(135deg, #667eea 0%, #764ba2 200%)'
         }}
       >
         {!game.coverImageUrl && <span>🎮</span>}
